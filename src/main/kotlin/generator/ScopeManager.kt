@@ -7,11 +7,11 @@ class ScopeManager {
 
     private val stack: ArrayDeque<MutableMap<String, String>> = ArrayDeque()
 
-    fun enterScope() {
+    fun openScope() {
         stack.push(mutableMapOf())
     }
 
-    fun exitScope() {
+    fun closeScope() {
         if(stack.isNotEmpty()) {
             stack.pop()
         } else {
