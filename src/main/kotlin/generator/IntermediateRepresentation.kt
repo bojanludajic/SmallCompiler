@@ -1,16 +1,24 @@
 package com.example.ir
 
-sealed class IntermediateCode {
-    data class Assign(val variable: String, val value: String) : IntermediateCode()
-    data class Print(val variable: String) : IntermediateCode()
-    class OpenScope : IntermediateCode() {
+sealed class IntermediateRepresentation {
+    data class Assign(val variable: String, val value: String) : IntermediateRepresentation() {
         override fun toString(): String {
-            return "OpenScope()"
+            return ("Assign $variable = $value")
         }
     }
-    class ClosedScope : IntermediateCode() {
+    data class Print(val variable: String) : IntermediateRepresentation() {
         override fun toString(): String {
-            return "ClosedScope()"
+            return ("Print $variable")
+        }
+    }
+    class OpenScope : IntermediateRepresentation() {
+        override fun toString(): String {
+            return "openScope()"
+        }
+    }
+    class ClosedScope : IntermediateRepresentation() {
+        override fun toString(): String {
+            return "closeScope()"
         }
     }
 }

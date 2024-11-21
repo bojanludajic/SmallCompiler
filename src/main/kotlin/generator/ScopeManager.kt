@@ -1,4 +1,4 @@
-package com.example
+package com.example.generator
 
 import java.util.ArrayDeque
 import java.util.EmptyStackException
@@ -6,6 +6,10 @@ import java.util.EmptyStackException
 class ScopeManager {
 
     private val stack: ArrayDeque<MutableMap<String, String>> = ArrayDeque()
+
+    init {
+        openScope()
+    }
 
     fun openScope() {
         stack.push(mutableMapOf())
@@ -19,13 +23,23 @@ class ScopeManager {
         }
     }
 
-    fun declareVar(name: String, value: String) {
+    fun assignVar(name: String, value: String) {
         val scope = stack.peek()
-        scope[name] = value
+        if(value.toIntOrNull() != null) {
+            scope[name] = value
+        } else {
+            scope[name] = scope[value] ?: "null"
+        }
+
     }
 
     fun getVariable(name: String): String {
-        return stack.peek()[name] ?: "null"
+        for(scope in stack) {
+            if(scope.containsKey(name)) {
+                return scope[name]!!
+            }
+        }
+        return "null"
     }
 
 }

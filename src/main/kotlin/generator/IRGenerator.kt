@@ -3,7 +3,7 @@ package com.example.generator
 import com.example.ir.IntermediateRepresentation
 import com.example.parser.ASTNode
 
-class CodeGenerator {
+class IRGenerator {
 
     private val instructions = mutableListOf<IntermediateRepresentation>()
 
