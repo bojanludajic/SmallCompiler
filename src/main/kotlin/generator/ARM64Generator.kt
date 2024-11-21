@@ -19,8 +19,8 @@ class ARM64Generator {
         when(c) {
             is IntermediateRepresentation.Assign -> handleAssign(c)
             is IntermediateRepresentation.Print -> handlePrint(c)
-            is IntermediateRepresentation.OpenScope -> handleOpenScope(c)
-            is IntermediateRepresentation.ClosedScope -> handleClosedScope(c)
+            is IntermediateRepresentation.OpenScope -> handleOpenScope()
+            is IntermediateRepresentation.ClosedScope -> handleClosedScope()
         }
     }
 
@@ -32,11 +32,11 @@ class ARM64Generator {
         instructions.add(".ascii \"${scopeStack.getVariable(c.variable)}\\n\"")
     }
 
-    private fun handleOpenScope(c: IntermediateRepresentation.OpenScope) {
+    private fun handleOpenScope() {
         scopeStack.openScope()
     }
 
-    private fun handleClosedScope(c: IntermediateRepresentation.ClosedScope) {
+    private fun handleClosedScope() {
         scopeStack.closeScope()
     }
 
