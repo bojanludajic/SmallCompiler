@@ -1,4 +1,4 @@
-x = 1
+x = 5
 print x
 scope {
  x = 2

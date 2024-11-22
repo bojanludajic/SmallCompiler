@@ -36,7 +36,7 @@ class Lexer(val code: String) {
                 }
             }
             if (!matched) {
-                throw IllegalArgumentException("Invalid type at index: ${ind}")
+                throw IllegalArgumentException("Invalid token at index: ${ind}")
             }
 
         }

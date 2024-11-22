@@ -19,4 +19,16 @@ class LexerTest {
         val lexer = Lexer(br.readText())
         assertEquals(expectedTokens, lexer.tokenize())
     }
+
+    @Test
+    fun testWhiteSpace() {
+        val expectedTokens = listOf(Token(TokenType.IDENT, "x"), Token(TokenType.ASSIGN),
+            Token(TokenType.NUMBER, "5"), Token(TokenType.IDENT, "y"),
+            Token(TokenType.ASSIGN), Token(TokenType.NUMBER, "7"),
+            Token(TokenType.OPEN_SCOPE), Token(TokenType.CLOSED_SCOPE))
+        val file = "src/test/resources/whitespacetest.txt"
+        val br = BufferedReader(FileReader(file))
+        val lexer = Lexer(br.readText())
+        assertEquals(expectedTokens, lexer.tokenize())
+    }
 }

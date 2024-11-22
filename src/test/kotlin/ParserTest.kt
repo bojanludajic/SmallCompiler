@@ -3,6 +3,7 @@ import com.example.parser.Parser
 import com.example.parser.ASTNode
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.io.BufferedReader
 import java.io.FileReader
 
@@ -18,6 +19,17 @@ class ParserTest {
         val lexer = Lexer(br.readText())
         val parser = Parser(lexer.tokenize())
         assertEquals(expectedTree, parser.parse())
+    }
+
+    @Test
+    fun testSemantics() {
+        val file = "src/test/resources/invalidcode.txt"
+        val br = BufferedReader(FileReader(file))
+        val lexer = Lexer(br.readText())
+        val parser = Parser(lexer.tokenize())
+        assertThrows<IllegalArgumentException> {
+            parser.parse()
+        }
     }
 
 }
