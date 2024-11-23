@@ -4,7 +4,8 @@ package com.example.lexer
 class Lexer(val code: String) {
 
     private val tokens = mutableListOf<Token>()
-    private var ind = 0;
+    private var ind = 0
+    private var line = 1
 
     private val tokenPatterns = listOf<Pair<String, TokenType?>>(
         "scope \\{" to TokenType.OPEN_SCOPE,
@@ -13,7 +14,7 @@ class Lexer(val code: String) {
         "\\}" to TokenType.CLOSED_SCOPE,
         "\\d+" to TokenType.NUMBER,
         "\\w+" to TokenType.IDENT,
-        "\\s+" to null
+        "\\s+" to null,
     )
 
     fun tokenize(): List<Token> {
@@ -30,13 +31,16 @@ class Lexer(val code: String) {
                         val newValue = if (tokenType.isNumberOrVar()) value else null
                         tokens.add(Token(tokenType, newValue))
                     }
+                    line += match.value.count { it == '\n' }
                     ind += match.value.length
                     matched = true
                     break
                 }
             }
+
             if (!matched) {
-                throw IllegalArgumentException("Invalid token at index: ${ind}")
+                val invalidToken = code.substring(ind).takeWhile { !it.isWhitespace() }
+                throw IllegalArgumentException("Invalid token ($invalidToken) at line: $line")
             }
 
         }
